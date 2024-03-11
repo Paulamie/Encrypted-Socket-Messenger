@@ -2,8 +2,7 @@ CC = clang++
 LD = clang++
 CPPFLAGS = -std=c++17  -I/opt/iot/include -D__DEBUG__=1
 
-LDFLAGS = -lpthread -L/opt/iot/lib -liot -lpthread
-
+LDFLAGS = -L/opt/iot/lib -liot -lpthread
 
 ROOTDIR = ./
 
@@ -15,15 +14,15 @@ BUILD_DIR = build
 # SIMPLETEST_OBJECT = $(BUILD_DIR)/simpletest.o
 LOG_OBJECT = $(BUILD_DIR)/log.o
 
-CPP_SOURCES = ./log.cpp
-CPP_HEADERS = ./log.hpp
-C_SOURCES = ./simpletest/simpletest.cpp
+#I'm assuming we wouldn't need this anymore?
+CPP_SOURCES = 
+CPP_HEADERS = 
+C_SOURCES = 
 
-TEST_SOURCE = test_log.cpp log.cpp simpletest/simpletest.cpp
-# TEST_OBJECT = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(notdir $(TEST_SOURCE)))
+RECEIVER = receiver
 
-APP = APP2
-TEST_APP = test_log
+APP = Socket
+
 
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(CPP_SOURCES:.cpp=.o)))
 OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.cpp=.o)))
@@ -31,8 +30,6 @@ OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.cpp=.o)))
 vpath %.cpp $(sort $(dir $(CPP_SOURCES)))
 vpath %.cpp src
 
-# OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
-# vpath %.c $(sort $(dir $(C_SOURCES)))
 
 $(BUILD_DIR)/%.o: %.cpp $(CPP_HEADERS) Makefile | $(BUILD_DIR)
 	$(ECHO) compiling $<
@@ -47,31 +44,17 @@ all: $(BUILD_DIR) $(BUILD_DIR)/$(APP) $(BUILD_DIR)/$(TEST_APP)
 run: $(BUILD_DIR)/$(APP)
 	$(BUILD_DIR)/$(APP)
 
-$(BUILD_DIR)/$(APP): main_part2.cpp $(OBJECTS) Makefile
+$(BUILD_DIR)/$(APP): client_send.cpp $(OBJECTS) Makefile
 	$(ECHO) linking $<
-	$(CC) $(CPPFLAGS) $(LDFLAGS) -o $@ ./main_part2.cpp $(OBJECTS)
+	$(CC) $(CPPFLAGS) -o $@ ./client_send.cpp $(LDFLAGS) $(OBJECTS)
+	$(ECHO) successs
+
+$(BUILD_DIR)/$(RECEIVER): client_receiver.cpp $(OBJECTS) Makefile
+	$(ECHO) linking $<
+	$(CC) $(CPPFLAGS) $(LDFLAGS) -o $@ ./client_receiver.cpp $(OBJECTS)
 	$(ECHO) successs
 
 .PHONY: all test clean
-
-# Compile simpletest.cpp and log.cpp separately
-$(SIMPLETEST_OBJECT): ./simpletest/simpletest.cpp $(CPP_HEADERS) Makefile | $(BUILD_DIR)
-	$(ECHO) compiling $<
-	$(CC) -c $(CPPFLAGS) $< -o $@
-
-$(LOG_OBJECT): log.cpp $(CPP_HEADERS) Makefile | $(BUILD_DIR)
-	$(ECHO) compiling $<
-	$(CC) -c $(CPPFLAGS) $< -o $@
-
-# Link test executable with separate object files
-test: $(BUILD_DIR)/$(TEST_APP)
-	$(BUILD_DIR)/$(TEST_APP)
-
-$(BUILD_DIR)/$(TEST_APP): $(OBJECTS) $(SIMPLETEST_OBJECT)  ./test_log.o $(TEST_OBJECT) Makefile
-	$(ECHO) linking $<
-	$(CC) $(LDFLAGS) -o $@ $(OBJECTS) $(SIMPLETEST_OBJECT)  ./test_log.o $(TEST_OBJECT)
-	$(ECHO) successs
-
 
 
 $(BUILD_DIR):
