@@ -39,19 +39,19 @@ $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
 	$(ECHO) compiling $<
 	clang -c $(CFLAGS) $< -o $@
 
-all: $(BUILD_DIR) $(BUILD_DIR)/$(APP) $(BUILD_DIR)/$(TEST_APP)
+all: $(BUILD_DIR) $(BUILD_DIR)/$(APP) $(BUILD_DIR)/$(RECEIVER)
 
 run: $(BUILD_DIR)/$(APP)
 	$(BUILD_DIR)/$(APP)
 
 $(BUILD_DIR)/$(APP): client_send.cpp $(OBJECTS) Makefile
 	$(ECHO) linking $<
-	$(CC) $(CPPFLAGS) -o $@ ./client_send.cpp $(LDFLAGS) $(OBJECTS)
+	$(CC) $(CPPFLAGS) -o $@ ./client_send.cpp $(OBJECTS) $(LDFLAGS)
 	$(ECHO) successs
 
 $(BUILD_DIR)/$(RECEIVER): client_receiver.cpp $(OBJECTS) Makefile
 	$(ECHO) linking $<
-	$(CC) $(CPPFLAGS) $(LDFLAGS) -o $@ ./client_receiver.cpp $(OBJECTS)
+	$(CC) $(CPPFLAGS)  -o $@ ./client_receiver.cpp $(OBJECTS) $(LDFLAGS)
 	$(ECHO) successs
 
 .PHONY: all test clean
