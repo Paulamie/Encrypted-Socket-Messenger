@@ -7,8 +7,12 @@ This project aims to create a socket which is able to send a message from the cl
 ## Usage
 To run the program simply type 'make all' into the terminal and the program should run as expected.
 
-## Makefile 
+## Production  
+In the Makefile i have implemented the following:
 
+In the client_send.cpp i have made the following changes:
+
+In the client_receiver.cpp i have made the following changes:
 
 ## Program outcome 
 This is what the outcome of this program should look like. 
