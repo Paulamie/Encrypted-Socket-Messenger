@@ -11,7 +11,7 @@ int main() {
     uwe::set_ipaddr("192.168.1.7");
 
     const int server_port = 8877;
-    const char* server_name = "192.168.1.8";
+    const char* server_name = "192.168.1.67";
 
     sockaddr_in server_address; // data structure for storing IPv4 or IPv6 addresses
 	memset(&server_address, 0, sizeof(server_address));

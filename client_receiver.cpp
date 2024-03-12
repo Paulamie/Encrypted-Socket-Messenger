@@ -9,7 +9,7 @@
 
 int main() {
     // set client IP address
-    uwe::set_ipaddr("192.168.1.8");
+    uwe::set_ipaddr("192.168.1.67");
 
     int server_port = 8877;
 

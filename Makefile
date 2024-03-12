@@ -21,7 +21,7 @@ C_SOURCES =
 
 RECEIVER = receiver
 
-APP = Socket
+APP = client
 
 
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(CPP_SOURCES:.cpp=.o)))
@@ -42,7 +42,7 @@ $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
 all: $(BUILD_DIR) $(BUILD_DIR)/$(APP) $(BUILD_DIR)/$(RECEIVER)
 
 run: $(BUILD_DIR)/$(APP)
-	$(BUILD_DIR)/$(APP)
+	$(BUILD_DIR)/$(RECEIVER)
 
 $(BUILD_DIR)/$(APP): client_send.cpp $(OBJECTS) Makefile
 	$(ECHO) linking $<
