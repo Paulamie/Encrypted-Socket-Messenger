@@ -27,15 +27,17 @@ int main() {
 
     sock.bind((struct sockaddr *)&server_address, sizeof(server_address));
 
+
     struct sockaddr_in client_address;
     size_t client_address_len = 0;
-
+    
     char buffer[1024];
     int len = sock.recvfrom(buffer, sizeof(buffer),0, (struct sockaddr *)& client_address, &client_address_len);
 
     //inet_ntoa returns user friendly representation of the ip address
     buffer[len] = '\0';
     printf("received: '%s' from client %s\n", buffer, inet_ntoa(client_address.sin_addr));
+    }
 
     return 0;
 }
