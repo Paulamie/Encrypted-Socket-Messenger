@@ -40,11 +40,15 @@ int main() {
     // data that will be sent to the server
 	std::string message = "This is an IOT packet";
 
+	size_t server_address_len = 0;
+	
     // send data
 	int len = sock.sendto(
         message.c_str(), message.length(), 0,
 	    (sockaddr*)&server_address, sizeof(server_address));
 
+	// receive message from the server 
+	int len = sock.recvfrom(buffer, sizeof(buffer),0, (struct sockaddr *)& server_address, &server_address_len);
 
     return 0;
 }
