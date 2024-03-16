@@ -23,6 +23,8 @@ RECEIVER = receiver
 
 APP = client
 
+RECEIVER2 = server
+
 
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(CPP_SOURCES:.cpp=.o)))
 OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.cpp=.o)))
@@ -39,7 +41,7 @@ $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
 	$(ECHO) compiling $<
 	clang -c $(CFLAGS) $< -o $@
 
-all: $(BUILD_DIR) $(BUILD_DIR)/$(APP) $(BUILD_DIR)/$(RECEIVER)
+all: $(BUILD_DIR) $(BUILD_DIR)/$(APP) $(BUILD_DIR)/$(RECEIVER) $(BUILD_DIR)/$(RECEIVER2)
 
 run: $(BUILD_DIR)/$(APP)
 	$(BUILD_DIR)/$(RECEIVER)
@@ -52,6 +54,11 @@ $(BUILD_DIR)/$(APP): client_send.cpp $(OBJECTS) Makefile
 $(BUILD_DIR)/$(RECEIVER): client_receiver.cpp $(OBJECTS) Makefile
 	$(ECHO) linking $<
 	$(CC) $(CPPFLAGS)  -o $@ ./client_receiver.cpp $(OBJECTS) $(LDFLAGS)
+	$(ECHO) successs
+
+$(BUILD_DIR)/$(RECEIVER2): receiver2.cpp $(OBJECTS) Makefile
+	$(ECHO) linking $<
+	$(CC) $(CPPFLAGS)  -o $@ ./receiver2.cpp $(OBJECTS) $(LDFLAGS)
 	$(ECHO) successs
 
 .PHONY: all test clean
