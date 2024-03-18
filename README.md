@@ -14,6 +14,8 @@ In the client_send.cpp i have made the following changes:
 
 In the client_receiver.cpp i have made the following changes:
 
+I have also implemented a 4th file (receiver2.cpp), this file is an improvement on the client_receiver file. as this file continually receives messages from the client and echo a message back to the client. 
+
 ## Program outcome 
 This is what the outcome of this program should look like. 
 
