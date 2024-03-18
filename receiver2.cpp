@@ -36,15 +36,16 @@ int main() {
     while (true){
     char buffer[1024];
     int len = sock.recvfrom(buffer, sizeof(buffer),0, (struct sockaddr *)& client_address, &client_address_len);
-     // send data
-	int len = sock.sendto(message.c_str(), message.length(), 0, (sockaddr*)&client_address, sizeof(client_address));
-    }
-
-
     //inet_ntoa returns user friendly representation of the ip address
     buffer[len] = '\0';
-    printf("received: '%s' from client %s\n", buffer, inet_ntoa(client_address.sin_addr));
+    printf("received: '%s' from client %s\n", buffer, inet_ntoa(client_address.sin_addr));  
     
+    // send data
+    std::string message = "Message from server";
+	int leng = sock.sendto(message.c_str(), message.length(), 0, (sockaddr*)&client_address, sizeof(client_address));
+
+    
+    }
 
     return 0;
 }

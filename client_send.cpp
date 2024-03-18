@@ -41,14 +41,17 @@ int main() {
 	std::string message = "This is an IOT packet";
 
 	size_t server_address_len = 0;
-	
     // send data
 	int len = sock.sendto(
         message.c_str(), message.length(), 0,
 	    (sockaddr*)&server_address, sizeof(server_address));
 
 	// receive message from the server 
-	int len = sock.recvfrom(buffer, sizeof(buffer),0, (struct sockaddr *)& server_address, &server_address_len);
+	char buffer[1024];
+	int leng = sock.recvfrom(buffer, sizeof(buffer),0, (struct sockaddr *)& server_address, &server_address_len);
+	//inet_ntoa returns user friendly representation of the ip address
+    buffer[len] = '\0';
+    printf("received: '%s' from client %s\n", buffer, inet_ntoa(client_address.sin_addr));
 
     return 0;
 }
