@@ -41,7 +41,7 @@ int main() {
     printf("received: '%s' from client %s\n", buffer, inet_ntoa(client_address.sin_addr));  
     
     // send data
-    std::string message = "Message from server";
+    std::string message = "This is an IOT packet";
 	int leng = sock.sendto(message.c_str(), message.length(), 0, (sockaddr*)&client_address, sizeof(client_address));
 
     
