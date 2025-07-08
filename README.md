@@ -1,12 +1,39 @@
-# socket
+# Encrypted Socket Messenger
 Author: Ana Paula Goncalves 
 
 ## Description
-</details>
-This project aims to create a socket which is able to send a message from the client side and receive the same message already decrypted. The project should be able to run continually and support any number of users. The server should also send the message received back to the client. 
+This project implements a socket-based communication system where a message is sent from the client to the server and is returned decrypted. The system supports multiple users and is designed to run continuously.
+
+- The **client** sends an encrypted message.
+- The **server** receives the message, decrypts it, and sends the result back.
+- Task 1 and Task 2 demonstrate two versions: a basic version and an optimized one.
 
 ## Usage
-To compile the program type 'make' into the terminal. To run the program, first run './build/receiver',to run the task 1 client_receiver file, or './build/server' to run the optimized version (task 2) and then run the client_send file by typing './build/client'.
+To run task1 (basic version):
+./build/receiver
+
+To run Task2 (optimised version:
+./build/server
+
+In a separte terminal, run the client:
+./build/client
+
+## Structure
+	•	client_send.cpp: Client-side sender (used in Task 2).
+	•	client_receiver.cpp: Client-side for Task 1.
+	•	receiver2.cpp: Server-side logic (possibly older version).
+	•	Makefile: Automates the build process.
+	•	build/: Contains compiled binaries.
+	•	*.png: Diagrams/screenshots for documentation.
+
+## Makefile
+
+The Makefile is similar to one created in Worksheet 1. The main difference is the set of files being compiled and how they are structured. As shown below, client_send.cpp is compiled as APP and client_receiver.cpp as RECEIVER.
+
+## Notes 
+	•	The client and receiver executables are placed in the /build directory.
+	•	Ensure you have the necessary permissions and that ports are not blocked.
+	•	Run server first before starting client communication.
 
 ## Production  
 In the Makefile i have implemented the following:
